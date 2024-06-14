@@ -125,26 +125,26 @@ class CreatePageCommand extends Command {
       name,
       'state',
       path,
-      extraFolder,
+      false,
       StateSample(
         '',
         name,
         overwrite: overwrite,
       ),
-      'states',
+      '',
     );
 
     var repoFile = handleFileCreate(
       name,
       'repo',
       path,
-      extraFolder,
+      false,
       RepoSample(
         '',
         name,
         overwrite: overwrite,
       ),
-      'repos',
+      '',
     );
 
     addRoute(

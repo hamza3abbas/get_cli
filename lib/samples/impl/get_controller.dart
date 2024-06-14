@@ -14,10 +14,14 @@ class ControllerSample extends Sample {
   String get content => _isServer ? serverController : flutterController;
 
   String get serverController => '''import 'package:get_server/get_server.dart';
+import '../${_fileName.snakeCase}/state.dart';
+import '../${_fileName.snakeCase}/repo.dart';
 
 class ${_fileName.pascalCase}Controller extends GetxController {
-  //TODO: Implement ${_fileName.pascalCase}Controller
+  final ${_fileName.pascalCase}State state = ${_fileName.pascalCase}State();
+  final ${_fileName.pascalCase}Repo repo = ${_fileName.pascalCase}Repo();
   
+  //TODO: Implement ${_fileName.pascalCase}Controller
 
   @override
   void onInit() {
@@ -34,13 +38,17 @@ class ${_fileName.pascalCase}Controller extends GetxController {
 
 }
 ''';
+
   String get flutterController => '''import 'package:get/get.dart';
-import '../states/${_fileName.snakeCase}_state.dart';
-import '../repos/${_fileName.snakeCase}_repo.dart';
+import '../state.dart';
+import '../repo.dart';
+
 class ${_fileName.pascalCase}Controller extends GetxController {
-  //TODO: Implement ${_fileName.pascalCase}Controller
   final ${_fileName.pascalCase}State state = ${_fileName.pascalCase}State();
   final ${_fileName.pascalCase}Repo repo = ${_fileName.pascalCase}Repo();
+  
+  //TODO: Implement ${_fileName.pascalCase}Controller
+
   final count = 0.obs;
   @override
   void onInit() {
