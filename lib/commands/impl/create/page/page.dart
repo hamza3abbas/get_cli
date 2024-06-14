@@ -14,8 +14,6 @@ import '../../../../functions/create/create_single_file.dart';
 import '../../../../functions/routes/get_add_route.dart';
 import '../../../../samples/impl/get_binding.dart';
 import '../../../../samples/impl/get_controller.dart';
-import '../../../../samples/impl/get_repo.dart';
-import '../../../../samples/impl/get_state.dart';
 import '../../../../samples/impl/get_view.dart';
 import '../../../interface/command.dart';
 
@@ -121,30 +119,18 @@ class CreatePageCommand extends Command {
       'bindings',
     );
 
-    var stateFile = handleFileCreate(
-      name,
-      'state',
-      path,
-      false,
-      StateSample(
-        '',
-        name,
-        overwrite: overwrite,
-      ),
-      '',
+    // Create state.dart without prefix
+    var stateFile = writeFile(
+      '${path}/state.dart',
+      '''class ${name.pascalCase}State {}''',
+      overwrite: overwrite,
     );
 
-    var repoFile = handleFileCreate(
-      name,
-      'repo',
-      path,
-      false,
-      RepoSample(
-        '',
-        name,
-        overwrite: overwrite,
-      ),
-      '',
+    // Create repo.dart without prefix
+    var repoFile = writeFile(
+      '${path}/repo.dart',
+      '''class ${name.pascalCase}Repo {}''',
+      overwrite: overwrite,
     );
 
     addRoute(
