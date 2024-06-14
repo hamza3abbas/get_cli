@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:dcli/dcli.dart';
 import 'package:recase/recase.dart';
 
@@ -15,6 +14,8 @@ import '../../../../functions/create/create_single_file.dart';
 import '../../../../functions/routes/get_add_route.dart';
 import '../../../../samples/impl/get_binding.dart';
 import '../../../../samples/impl/get_controller.dart';
+import '../../../../samples/impl/get_repo.dart'; // Import the new sample
+import '../../../../samples/impl/get_state.dart'; // Import the new sample
 import '../../../../samples/impl/get_view.dart';
 import '../../../interface/command.dart';
 
@@ -63,9 +64,6 @@ class CreatePageCommand extends Command {
       if (result.index == 0) {
         _writeFiles(path, name!, overwrite: true);
       } else if (result.index == 2) {
-        // final dialog = CLI_Dialog();
-        // dialog.addQuestion(LocaleKeys.ask_new_page_name.tr, 'name');
-        // name = dialog.ask()['name'] as String?;
         var name = ask(LocaleKeys.ask_new_page_name.tr);
         checkForAlreadyExists(name.trim().snakeCase);
       }
@@ -123,6 +121,32 @@ class CreatePageCommand extends Command {
       'bindings',
     );
 
+    var stateFile = handleFileCreate(
+      name,
+      'state',
+      path,
+      extraFolder,
+      StateSample(
+        '',
+        name,
+        overwrite: overwrite,
+      ),
+      'states',
+    );
+
+    var repoFile = handleFileCreate(
+      name,
+      'repo',
+      path,
+      extraFolder,
+      RepoSample(
+        '',
+        name,
+        overwrite: overwrite,
+      ),
+      'repos',
+    );
+
     addRoute(
       name,
       Structure.pathToDirImport(bindingFile.path),
@@ -137,3 +161,4 @@ class CreatePageCommand extends Command {
   @override
   int get maxParameters => 0;
 }
+dart pub global activate --source path .
