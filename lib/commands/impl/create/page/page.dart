@@ -14,8 +14,8 @@ import '../../../../functions/create/create_single_file.dart';
 import '../../../../functions/routes/get_add_route.dart';
 import '../../../../samples/impl/get_binding.dart';
 import '../../../../samples/impl/get_controller.dart';
-import '../../../../samples/impl/get_repo.dart'; // Import the new sample
-import '../../../../samples/impl/get_state.dart'; // Import the new sample
+import '../../../../samples/impl/get_repo.dart';
+import '../../../../samples/impl/get_state.dart';
 import '../../../../samples/impl/get_view.dart';
 import '../../../interface/command.dart';
 
@@ -161,4 +161,3 @@ class CreatePageCommand extends Command {
   @override
   int get maxParameters => 0;
 }
-dart pub global activate --source path .
