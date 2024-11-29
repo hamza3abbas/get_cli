@@ -1,6 +1,6 @@
 import 'dart:io';
-
-import 'package:recase/recase.dart';
+import 'package:dcli/dcli.dart'; // Importing dcli for better terminal utilities
+import '../../../../common/menu/menu.dart';
 import '../../../../common/utils/logger/log_utils.dart';
 import '../../../../core/internationalization.dart';
 import '../../../../core/locales.g.dart';
@@ -19,22 +19,49 @@ class CreateBaseCommand extends Command {
     var dirName = 'base';
     var basePath = Directory(dirName);
 
-    if (!basePath.existsSync()) {
+    // Check if the directory already exists
+    if (basePath.existsSync()) {
+      final menu = Menu(
+        [
+          LocaleKeys.options_yes.tr,
+          LocaleKeys.options_no.tr,
+          LocaleKeys.options_rename.tr,
+        ],
+        title: Translation(LocaleKeys.ask_existing_page.trArgs([dirName]))
+            .toString(),
+      );
+      final result = menu.choose();
+
+      if (result.index == 0) {
+        _createFiles(basePath, overwrite: true);
+      } else if (result.index == 2) {
+        var newName = ask(LocaleKeys.ask_existing_page.tr);
+        var newPath = Directory(newName);
+        _createFiles(newPath, overwrite: false);
+      }
+    } else {
+      // If the directory doesn't exist, create it
       basePath.createSync(recursive: true);
       LogService.success(LocaleKeys.sucess_file_created.trArgs([dirName]));
-    } else {
-      LogService.info('Success creating base controllers');
+      _createFiles(basePath, overwrite: false);
     }
-
-    _createFile(
-        '${dirName}/controller.dart', _controllerTemplate(), 'Controller');
-    _createFile('${dirName}/state.dart', _stateTemplate(), 'State');
-    _createFile('${dirName}/widget.dart', _widgetTemplate(), 'Widget');
   }
 
-  void _createFile(String filePath, String content, String fileType) {
+  /// Creates the required files in the given directory
+  void _createFiles(Directory basePath, {bool overwrite = false}) {
+    _createFile('${basePath.path}/controller.dart', _controllerTemplate(),
+        'Controller', overwrite);
+    _createFile(
+        '${basePath.path}/state.dart', _stateTemplate(), 'State', overwrite);
+    _createFile(
+        '${basePath.path}/widget.dart', _widgetTemplate(), 'Widget', overwrite);
+  }
+
+  /// Helper to create individual files with content if they don't exist
+  void _createFile(
+      String filePath, String content, String fileType, bool overwrite) {
     var file = File(filePath);
-    if (file.existsSync()) {
+    if (file.existsSync() && !overwrite) {
       LogService.info('$fileType file already exists at $filePath');
     } else {
       file.writeAsStringSync(content);

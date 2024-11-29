@@ -26,8 +26,8 @@ Future<void> createInitGetxPattern() async {
   ];
   GetXMainSample(isServer: isServerProject).create();
   await Future.wait([
-    CreatePageCommand().execute(),
     CreateBaseCommand().execute(),
+    CreatePageCommand().execute(),
   ]);
   createListDirectory(initialDirs);
 
