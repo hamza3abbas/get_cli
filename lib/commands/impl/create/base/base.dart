@@ -4,6 +4,7 @@ import '../../../../common/menu/menu.dart';
 import '../../../../common/utils/logger/log_utils.dart';
 import '../../../../core/internationalization.dart';
 import '../../../../core/locales.g.dart';
+import '../../../../core/structure.dart';
 import '../../../interface/command.dart';
 
 /// The command creates a `base` directory with controller, state, and widget files.
@@ -17,8 +18,15 @@ class CreateBaseCommand extends Command {
   @override
   Future<void> execute() async {
     var dirName = 'base';
-    var basePath = Directory(dirName);
 
+    var newFileModel =
+        Structure.model(name, 'page', true, on: onCommand, folderName: dirName);
+    var pathSplit = Structure.safeSplitPath(newFileModel.path!);
+
+    pathSplit.removeLast();
+    var path = pathSplit.join('/');
+    path = Structure.replaceAsExpected(path: path);
+    var basePath = Directory(path);
     // Check if the directory already exists
     if (basePath.existsSync()) {
       print("7a7a7a77a");
