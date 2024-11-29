@@ -20,6 +20,7 @@ class Structure {
     'init': replaceAsExpected(path: 'lib/'),
     'route': replaceAsExpected(path: 'lib/routes/'),
     'repository': replaceAsExpected(path: 'lib/app/data/'),
+    'base': replaceAsExpected(path: 'lib/app/modules'),
     'provider': replaceAsExpected(path: 'lib/app/data'),
     'controller': replaceAsExpected(path: 'lib/app'),
     'binding': replaceAsExpected(path: 'lib/app'),

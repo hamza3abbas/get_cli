@@ -21,6 +21,7 @@ class CreateBaseCommand extends Command {
 
     // Check if the directory already exists
     if (basePath.existsSync()) {
+      print("7a7a7a77a");
       final menu = Menu(
         [
           LocaleKeys.options_yes.tr,
@@ -40,6 +41,7 @@ class CreateBaseCommand extends Command {
         _createFiles(newPath, overwrite: false);
       }
     } else {
+      print("8a8a8a8a8a8a8a8");
       // If the directory doesn't exist, create it
       basePath.createSync(recursive: true);
       LogService.success(LocaleKeys.sucess_file_created.trArgs([dirName]));
