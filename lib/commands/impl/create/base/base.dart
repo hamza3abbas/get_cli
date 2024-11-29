@@ -80,8 +80,8 @@ class CreateBaseCommand extends Command {
   }
 
   String _controllerTemplate() => '''
- import 'package:get/get.dart';
- import 'state.dart';
+import 'package:get/get.dart';
+import 'state.dart';
 
 abstract class BaseController<T> extends GetxController {
   final BaseState<T> baseState = BaseState<T>();
@@ -96,7 +96,9 @@ abstract class BaseController<T> extends GetxController {
 
       final result = await fetchData();
 
-      if (result == null || (result is List && result.isEmpty)) {
+      if (result == null ||
+          (result is List && result.isEmpty) ||
+          (result is Map<dynamic, dynamic> && result.isEmpty)) {
         baseState.isEmpty.value = true;
       } else {
         baseState.data.value = result;
@@ -119,7 +121,9 @@ abstract class BaseController<T> extends GetxController {
 ''';
 
   String _stateTemplate() => '''
-  class BaseState<T> {
+  import 'package:get/get.dart';
+
+class BaseState<T> {
   var isLoading = false.obs;
   var isError = false.obs;
   var errorMessage = ''.obs;
@@ -127,10 +131,11 @@ abstract class BaseController<T> extends GetxController {
   var isEmpty = false.obs;
   var data = Rxn<T>();
 }
+
 ''';
 
   String _widgetTemplate() => '''
- import 'package:flutter/material.dart';
+  import 'package:flutter/material.dart';
  import 'package:get/get.dart';
 
  import 'controller.dart';

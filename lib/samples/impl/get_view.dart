@@ -22,7 +22,7 @@ class GetViewSample extends Sample {
 
   String get _flutterView => '''import 'package:flutter/material.dart';
 import 'package:get/get.dart'; 
-import '../../base/widget.dart';
+import '../../widget.dart';
 $import
 
 class $_viewName extends $_controllerName {

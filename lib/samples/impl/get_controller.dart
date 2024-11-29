@@ -41,7 +41,7 @@ class ${_fileName.pascalCase}Controller extends GetxController {
 
   String get flutterController => '''import 'package:get/get.dart';
 import '../state.dart';
-import '../../base/controller.dart';
+import '../../controller.dart';
 import '../repo.dart';
 
 class ${_fileName.pascalCase}Controller extends BaseController<dynamic> {
